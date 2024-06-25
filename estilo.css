@@ -9,6 +9,7 @@ body {
     color: #fff;
     text-align: center;
     padding: 1em;
+    height: 180px;
   }
   main {
     padding: 1em;
@@ -32,3 +33,19 @@ body {
     margin: 0.5em 0;
   }
   
+  #encabezado img{
+    display: block;
+    width: 150px;
+    margin-left: 60px;
+  }
+
+  .encabezado{
+    display: flex;
+  }
+
+  #fraseEncabezado{
+    text-align: center;
+    margin-left: 150px;
+    font-size: 40px;
+    margin-top: 50px;
+  }

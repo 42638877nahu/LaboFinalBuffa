@@ -4,18 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio</title>
-  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <header>
-    <h1>Bienvenido a la Pasteleria de Katy</h1>
-    <img src="./tortagolosa.jpg" alt="foto de torta golosa">
-  </header>
+  <div id="encabezado"></div>
+  <table id="tabla-productos">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nombre pastel</th>
+        <th>Precio(Pesos)</th>
+        <th>Precio(Dólares)</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- se cargan los pasteles desde javascript-->
+    </tbody>
+  </table>
   <main>
-    <a href="productos.html">Ir a Pasteles</a>
+    <a href="pasteles.html">Agregar Pasteles</a>
   </main>
   <footer>
-    <p>© 2024 Pasteleria de Katy</p>
+    <p>Dirección: Herminia Benegas 1803</p>
+    <p>Celular: 15696146</p>
   </footer>
+  <script src="script.js"></script>
 </body>
 </html>
