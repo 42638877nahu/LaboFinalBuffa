@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <h1>Pasteleria de Katy</h1>
+  </header>
+  <main>
+    <table id="tabla-productos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Precio (Pesos)</th>
+          <th>Precio (Dólares)</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Productos se llenarán aquí -->
+      </tbody>
+    </table>
+    <form id="formulario-alta">
+      <h2>Agregar Pasteles</h2>
+      <label for="titulo">Tipo de pasteles:</label>
+      <input type="text" id="titulo" name="titulo" required>
+      <label for="precioPeso">Precio (Pesos):</label>
+      <input type="number" id="precioPeso" name="precioPeso" required>
+      <label for="precioDolar">Precio (Dólares):</label>
+      <input type="number" id="precioDolar" name="precioDolar" required>
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha" name="fecha" required>
+      <button type="submit" id="agregarTorta">Agregar</button>
+    </form>
+    <form id="formulario-edicion" style="display: none;">
+      <h2>Editar Producto</h2>
+      <input type="hidden" id="idcod" name="idcod">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo-editar" name="titulo" required>
+      <label for="precioPeso">Precio (Pesos):</label>
+      <input type="number" id="precioPeso-editar" name="precioPeso" required>
+      <label for="precioDolar">Precio (Dólares):</label>
+      <input type="number" id="precioDolar-editar" name="precioDolar" required>
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha-editar" name="fecha" required>
+      <button type="submit">Guardar Cambios</button>
+    </form>
+  </main>
+  <footer>
+    <p>© 2024 Pasteleria de Katy</p>
+  </footer>
+  <script src="js/Productos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
