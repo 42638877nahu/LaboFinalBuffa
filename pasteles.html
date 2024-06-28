@@ -9,7 +9,7 @@
 <body>
   <div id="encabezado"></div>
   <main>
-    <form id="formulario-alta">
+    <form id="formularioalta">
       <h2>Agregar Pasteles</h2>
       <label for="titulo">Tipo de pasteles:</label>
       <input type="text" id="titulo" name="titulo" required>
@@ -19,9 +19,10 @@
       <input type="number" id="precioDolar" name="precioDolar" required>
       <label for="fecha">Fecha:</label>
       <input type="date" id="fecha" name="fecha" required>
-      <button type="submit" id="agregarTorta">Agregar</button>
+      <button type="button" id="agregarTorta">Agregar</button>
     </form>
-    <form id="formulario-edicion" style="display: none;">
+
+    <form id="formularioedicion" style="display: none;">
       <h2>Editar Producto</h2>
       <input type="hidden" id="idcod" name="idcod">
       <label for="titulo">Título:</label>
@@ -35,11 +36,12 @@
       <button type="submit">Guardar Cambios</button>
     </form>
   </main>
+
   <footer>
     <p>Dirección: Herminia Benegas 1803</p>
     <p>Celular: 15696146</p>
   </footer>
+
   <script src="script.js"></script>
-  <script src="pasteles.js"></script>
 </body>
 </html>
