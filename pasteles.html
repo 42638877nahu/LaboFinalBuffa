@@ -6,35 +6,31 @@
   <title>Productos</title>
   <link rel="stylesheet" href="estilo.css">
 </head>
-<body>
-  <div id="encabezado"></div>
+<body class="contenedor">
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+          <img src="img/LogoPasteleria.png">
+      </div>
+      <h1 class="logo-nombre">Cocinar con AMOR, alimenta el ALMA</h1>
+    </div>   
+  </header>
   <main>
-    <form id="formularioalta">
+    <div class="contenedor-form">
+      <form id="formularioalta" class="form-edicion">
       <h2>Agregar Pasteles</h2>
       <label for="titulo">Tipo de pasteles:</label>
-      <input type="text" id="titulo" name="titulo" required>
+      <input type="text" id="nombre" name="titulo" required>
       <label for="precioPeso">Precio (Pesos):</label>
       <input type="number" id="precioPeso" name="precioPeso" required>
       <label for="precioDolar">Precio (Dólares):</label>
       <input type="number" id="precioDolar" name="precioDolar" required>
       <label for="fecha">Fecha:</label>
       <input type="date" id="fecha" name="fecha" required>
-      <button type="button" id="agregarTorta">Agregar</button>
+      <button type="button" id="btnAgregar">Agregar</button>
     </form>
-
-    <form id="formularioedicion" style="display: none;">
-      <h2>Editar Producto</h2>
-      <input type="hidden" id="idcod" name="idcod">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo-editar" name="titulo" required>
-      <label for="precioPeso">Precio (Pesos):</label>
-      <input type="number" id="precioPeso-editar" name="precioPeso" required>
-      <label for="precioDolar">Precio (Dólares):</label>
-      <input type="number" id="precioDolar-editar" name="precioDolar" required>
-      <label for="fecha">Fecha:</label>
-      <input type="date" id="fecha-editar" name="fecha" required>
-      <button type="submit">Guardar Cambios</button>
-    </form>
+    </div>
+    
   </main>
 
   <footer>
@@ -42,6 +38,6 @@
     <p>Celular: 15696146</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="agregar.js"></script>
 </body>
 </html>

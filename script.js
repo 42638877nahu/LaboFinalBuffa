@@ -1,78 +1,28 @@
-const ApiUrl = 'https://api.yumserver.com/17045/products';
-
 document.addEventListener("DOMContentLoaded", function() {
-    // MUESTRA ENCABEZADO
-    fetch('encabezado.html')
-        .then(response => {
+    const tablaProductos = document.getElementById("tablaproductos").querySelector("tbody");
+    const apiURL = "https://api.yumserver.com/17045/products";
+
+    // Función para obtener productos desde la API
+    async function obtenerProductos() {
+        try {
+            const response = await fetch(apiURL);
             if (!response.ok) {
-                throw new Error('Error al cargar el encabezado: ' + response.statusText);
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
             }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('encabezado').innerHTML = data;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
-    // AGREGAMOS EVENTO CLICK AL BOTÓN AGREGAR PASTELES
-    const botonAgregarTorta = document.getElementById('agregarTorta');
-    if (botonAgregarTorta) {
-        botonAgregarTorta.addEventListener('click', function() {
-            const titulo = document.getElementById('titulo').value;
-            const precioPeso = document.getElementById('precioPeso').value;
-            const precioDolar = document.getElementById('precioDolar').value;
-            const fecha = document.getElementById('fecha').value;
-
-            const pastel = {
-                titulo: titulo,
-                precioPeso: precioPeso,
-                precioDolar: precioDolar,
-                fecha: fecha
-            };
-
-            // SOLICITUD A LA API PARA AGREGAR PASTELES
-            fetch(ApiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(pastel),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al agregar el pastel');
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Pastel agregado correctamente'); 
-                obtenerYMostrarProductos(); 
-                document.getElementById('formularioalta').reset(); 
-            })
-            .catch(error => {
-                console.error('Error al agregar el pastel:', error);
-            });
-        });
+            const productos = await response.json();
+            mostrarProductos(productos);
+        } catch (error) {
+            console.error("Error al obtener los productos:", error);
+        }
     }
 
-    // AGREGAMOS EVENTO CLICK AL BOTÓN MOSTRAR
-    const botonMostrar = document.getElementById('mostrar');
-    if (botonMostrar) {
-        botonMostrar.addEventListener('click', function() {
-            // OBTENER Y MOSTRAR PRODUCTOS
-            obtenerYMostrarProductos();
-        });
-    }
-
-    // FUNCION PARA MOSTRAR PRODUCTOS
-    function MostrarProductos(productos) {
-        const tabla = document.getElementById('tablaproductos').querySelector('tbody');
-        tabla.innerHTML = '';
+    // Función para mostrar productos en la tabla
+    function mostrarProductos(productos) {
+        tablaProductos.innerHTML = ""; // Limpiar el cuerpo de la tabla antes de agregar los productos
 
         productos.forEach(producto => {
-            const fila = document.createElement('tr');
+            const fila = document.createElement("tr");
+
             fila.innerHTML = `
                 <td>${producto.idcod}</td>
                 <td>${producto.titulo}</td>
@@ -80,62 +30,121 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td>${producto.precioDolar}</td>
                 <td>${producto.fecha}</td>
                 <td>
-                    <button onclick="mostrarFormularioEdicion('${producto.idcod}')">Editar</button>
-                    <button class="eliminarbtn" data-id="${producto.idcod}">Eliminar</button> <!-- Botón para eliminar -->
+                <button class="editar-btn" onclick="mostrarFormularioEdicion('${producto.idcod}', '${producto.titulo}', '${producto.precioPeso}', '${producto.precioDolar}', '${producto.fecha}')">Editar</button>
+                <button class="eliminarbtn" data-id="${producto.idcod}">Eliminar</button>
                 </td>
             `;
-            tabla.appendChild(fila);
-        });
 
-        // Agregar evento click a cada botón de eliminar
-        const botonesEliminar = tabla.querySelectorAll('.eliminarbtn');
-        botonesEliminar.forEach(boton => {
-            boton.addEventListener('click', function() {
-                const idcod = boton.getAttribute('data-id');
-                eliminarPastel(idcod);
+            // Agregar evento click al botón Eliminar de esta fila
+            const btnEliminar = fila.querySelector(".eliminarbtn");
+            btnEliminar.addEventListener("click", function() {
+                const idProducto = btnEliminar.getAttribute("data-id");
+                eliminarProducto(idProducto);
             });
-        });
-    }
 
-    // Función para obtener y mostrar productos
-    function obtenerYMostrarProductos() {
-        fetch(ApiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al obtener los productos');
-                }
-                return response.json();
-            })
-            .then(productos => {
-                MostrarProductos(productos);
-                document.getElementById('tablaproductos').style.display = 'block';
-            })
-            .catch(error => console.error('Error al obtener los productos:', error));
+
+            tablaProductos.appendChild(fila);
+        });
+
+        // Mostrar la tabla una vez que los productos han sido agregados
+        tablaProductos.parentElement.style.display = "table";
     }
+    
 
     // Función para eliminar un producto por su id
-    function eliminarPastel(idcod) {
-      const idcodigo = idcod;
-      if (confirm(`¿Estás seguro de eliminar el producto con ID ${idcod}?`)) {
-        fetch(ApiUrl, {
-          method: 'DELETE',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({idcod: idcodigo}),
-          })
-          .then(response => {
-              console.log(response);
-              if (!response.ok) {
-                  throw new Error('Error al eliminar el producto');
-              }
-              alert('Producto eliminado correctamente');
-              obtenerYMostrarProductos();
-          })
-          .catch(error => {
-              console.error('Error al eliminar el producto:', error);
-              alert('Error al eliminar el producto:', error);
-          });
-      }
-  }
+    async function eliminarProducto(idProducto) {
+        try {
+            const response = await fetch(apiURL, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({idcod: idProducto}),
+                })
+                
+            
+            obtenerProductos(); // Actualizar la lista de productos después de eliminar
+            alert('Producto eliminado correctamente');
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+            alert("Error al eliminar el producto:", error.message);
+        }
+    }
+
+    const btnGuardarCambios = document.getElementById('guardarCambios');
+    btnGuardarCambios.addEventListener('click', function() {
+        const id = document.getElementById('idcod').value;
+        const titulo = document.getElementById('titulo-editar').value;
+        const precioPeso = document.getElementById('precioPeso-editar').value;
+        const precioDolar = document.getElementById('precioDolar-editar').value;
+        const fecha = document.getElementById('fecha-editar').value;
+
+        const productoActualizado = {
+            idcod: id,
+            titulo: titulo,
+            precioPeso: precioPeso,
+            precioDolar: precioDolar,
+            fecha: fecha
+        };
+
+        // Enviar solicitud PATCH a la API para actualizar el producto
+        fetch(apiURL, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productoActualizado),
+            
+        })
+        
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al actualizar el producto');
+            }
+            
+            obtenerProductos()
+            ocultarFormularioEdicion()
+            alert('Producto guardado correctamente');
+        })
+        .catch(error => {
+            console.error('Error al actualizar el producto:', error);
+            alert('Error al actualizar el producto:', error);
+        });
+    });
+
+
+    window.mostrarFormularioEdicion = function(id, titulo, precioPeso, precioDolar, fecha) {
+        document.getElementById('idcod').value = id;
+        document.getElementById('titulo-editar').value = titulo;
+        document.getElementById('precioPeso-editar').value = precioPeso;
+        document.getElementById('precioDolar-editar').value = precioDolar;
+        document.getElementById('fecha-editar').value = fecha;
+
+        const modal = document.getElementById('modal-edicion');
+        modal.style.display = 'block';
+    }
+
+    function ocultarFormularioEdicion() {
+        const modal = document.getElementById('modal-edicion');
+        modal.style.display = 'none';
+    }
+
+    // Cerrar el modal cuando se hace clic en la "x"
+    document.querySelector(".close").addEventListener("click", ocultarFormularioEdicion);
+
+    // Cerrar el modal cuando se hace clic fuera del modal
+    window.addEventListener("click", function(event) {
+        const modal = document.getElementById('modal-edicion');
+        if (event.target == modal) {
+            ocultarFormularioEdicion();
+        }
+    });
+
+    obtenerProductos(); // Obtener y mostrar productos al cargar la página
+
+
 });
+
+
+
+
