@@ -53,22 +53,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Función para eliminar un producto por su id
     async function eliminarProducto(idProducto) {
-        try {
-            const response = await fetch(apiURL, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({idcod: idProducto}),
-                })
+        if(confirm('¿Seguro que va a eliminar el producto?')){
+            try {
+                const response = await fetch(apiURL, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({idcod: idProducto}),
+                    })
+                    
                 
-            
-            obtenerProductos(); // Actualizar la lista de productos después de eliminar
-            alert('Producto eliminado correctamente');
-        } catch (error) {
-            console.error("Error al eliminar el producto:", error);
-            alert("Error al eliminar el producto:", error.message);
+                obtenerProductos(); // Actualizar la lista de productos después de eliminar
+                alert('Producto eliminado correctamente');
+            } catch (error) {
+                console.error("Error al eliminar el producto:", error);
+                alert("Error al eliminar el producto:", error.message);
+            }
         }
+        else{
+            console.log('Eliminar cancelado');
+        }
+       
     }
 
     const btnGuardarCambios = document.getElementById('guardarCambios');
