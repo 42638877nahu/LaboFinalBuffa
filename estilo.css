@@ -201,3 +201,11 @@ button.eliminarbtn:hover {
   justify-content: center;
   width: 100%;
 }
+
+#btnVolver{
+  background-color: darksalmon;
+}
+
+#btnAgregar{
+  background-color: #88cb8b;
+}

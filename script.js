@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-
+    //Abre el modal 
     window.mostrarFormularioEdicion = function(id, titulo, precioPeso, precioDolar, fecha) {
         document.getElementById('idcod').value = id;
         document.getElementById('titulo-editar').value = titulo;

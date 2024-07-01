@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Después de agregar el producto correctamente
             document.getElementById('formularioalta').reset();
+            window.location.href = 'index.html';
 
 
         } catch (error) {
@@ -46,7 +47,9 @@ document.addEventListener("DOMContentLoaded", function() {
         
     }
 
-    
+    btnVolver.addEventListener("click", function() {
+        window.location.href = 'index.html';
+    });
 
 });
 
